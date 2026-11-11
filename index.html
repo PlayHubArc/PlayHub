@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArcadeHub — Next-Gen Retro & Casino Portal</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="bg-grid"></div>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+
+  <!-- Top Navigation & Live Bankroll -->
+  <header class="site-header glass-panel">
+    <div class="brand">
+      <div class="brand-logo">AH</div>
+      <div>
+        <h1 class="brand-title">ARCADE<span>HUB</span></h1>
+        <p class="brand-subtitle">CASINO • KOOP • RETRO • 3D</p>
+      </div>
+    </div>
+
+    <div class="search-wrapper">
+      <input type="search" id="gameSearch" placeholder="Spiel suchen (z. B. Blackjack, Roulette, Koop)..." aria-label="Spiel suchen">
+    </div>
+
+    <div class="wallet-bar">
+      <div class="balance-card">
+        <span class="balance-label">BANKROLL</span>
+        <div class="balance-value-wrap">
+          <span class="coin-icon">◈</span>
+          <span id="headerBalance">1000</span>
+          <span class="currency-unit">CR</span>
+        </div>
+      </div>
+      <button id="reloadBtn" class="btn-neon btn-reload hidden" title="Bankrott-Schutz: +500 kostenlose Credits">
+        ⚡ +500 RELOAD
+      </button>
+      <button id="soundToggleHeader" class="btn-icon" title="Sound umschalten" aria-label="Sound umschalten">
+        🔊
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-container">
+    <!-- Category Filter Bar -->
+    <nav class="category-bar" aria-label="Spielkategorien">
+      <button class="cat-btn active" data-category="all">Alle Spiele</button>
+      <button class="cat-btn" data-category="casino">🎰 Casino / Minigames</button>
+      <button class="cat-btn" data-category="coop">👥 2-Spieler / Koop</button>
+      <button class="cat-btn" data-category="retro">🕹️ Retro / Action</button>
+      <button class="cat-btn" data-category="favorites">⭐ Favoriten <span id="favCount" class="badge">0</span></button>
+    </nav>
+
+    <!-- Stats Strip -->
+    <section class="stats-strip glass-panel">
+      <div class="stat-item">
+        <span class="stat-label">Gespielte Runden</span>
+        <strong id="statRounds">0</strong>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Höchster Kontostand</span>
+        <strong id="statPeakBalance">1000 CR</strong>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Koop-Level geschafft</span>
+        <strong id="statCoopLevels">0</strong>
+      </div>
+      <div class="stat-item">
+        <span class="stat-label">Snake Highscore</span>
+        <strong id="statSnakeHigh">0</strong>
+      </div>
+    </section>
+
+    <!-- Games Grid -->
+    <section id="gamesGrid" class="games-grid" aria-live="polite"></section>
+  </main>
+
+  <!-- Unified Game Modal -->
+  <div id="gameModal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="modalGameTitle">
+    <div id="modalContainer" class="modal-window glass-panel">
+      <!-- Modal Topbar -->
+      <header class="modal-header">
+        <div class="modal-title-group">
+          <span id="modalCategoryBadge" class="cat-pill">CASINO</span>
+          <h2 id="modalGameTitle">Spieltitel</h2>
+        </div>
+
+        <div class="modal-controls">
+          <div class="modal-wallet">
+            <span>Guthaben:</span>
+            <strong id="modalBalance">1000</strong>
+            <span>CR</span>
+            <button id="modalReloadBtn" class="btn-mini-reload hidden">+500 CR</button>
+          </div>
+
+          <button id="modalRulesBtn" class="btn-icon" title="Spielregeln anzeigen">📖</button>
+          <button id="modalSoundBtn" class="btn-icon" title="Sound umschalten">🔊</button>
+          <button id="modalFullscreenBtn" class="btn-icon" title="Vollbild umschalten">⛶</button>
+          <button id="modalCloseBtn" class="btn-icon btn-close" title="Schließen">✕</button>
+        </div>
+      </header>
+
+      <!-- Collapsible Rules Drawer -->
+      <aside id="modalRulesDrawer" class="rules-drawer hidden">
+        <div class="rules-content">
+          <h3>Spielregeln & Steuerung</h3>
+          <p id="modalRulesText"></p>
+        </div>
+      </aside>
+
+      <!-- Dynamic Game Viewport -->
+      <div id="gameStage" class="game-stage"></div>
+
+      <!-- Unified Betting & Chip Bar (shown for Casino Games) -->
+      <footer id="modalBettingBar" class="modal-betting-bar">
+        <div class="chip-selector" id="chipSelector">
+          <span class="chip-label">EINSATZ-CHIPS:</span>
+          <button class="chip chip-10 active" data-value="10">10</button>
+          <button class="chip chip-25" data-value="25">25</button>
+          <button class="chip chip-50" data-value="50">50</button>
+          <button class="chip chip-100" data-value="100">100</button>
+          <button class="chip chip-500" data-value="500">500</button>
+        </div>
+        <div class="bet-status">
+          <span>Aktiver Chip: <strong id="selectedChipLabel">10 CR</strong></span>
+        </div>
+      </footer>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="games/blackjack.js"></script>
+  <script src="games/slots.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
